@@ -16,15 +16,16 @@ class Finder extends React.Component {
     var currentPage = this.state.currentPage;
     var maxItems = this.state.maxItems;
     var callback = this.setPage.bind(this);
-    var pageOffset = currentPage -1;
+    var pageOffset = currentPage - 1;
     var pageStart = (pageOffset * maxItems) + 1;
 
     if (content !== undefined && content.data.length > 0) {
-      debugger;
+
       var items =
         this.sortData(content.data).slice(pageStart, pageStart + maxItems);
-        var itemCount = content.data.length;
-        var pageCount = Math.ceil(itemCount/maxItems);
+
+      var itemCount = content.data.length;
+      var pageCount = Math.ceil(itemCount / maxItems);
 
       return (
         <div>
@@ -45,7 +46,7 @@ class Finder extends React.Component {
               <tfoot>
                 <tr>
                   <td colspan="5">
-                    <div  align="right">Page {currentPage} of {pageCount} </div>
+                    <div align="right">Page {currentPage} of {pageCount} </div>
                   </td>
                 </tr>
               </tfoot>
@@ -75,25 +76,26 @@ class Finder extends React.Component {
     var itemCount = content.data.length;
     var currentPage = this.state.currentPage;
     var maxItems = this.state.maxItems;
-    var pageCount = Math.ceil(itemCount/maxItems);
+    var pageCount = Math.ceil(itemCount / maxItems);
 
+    debugger;
     switch (selected) {
       case 'Previous':
-        if(currentPage >1 ){
-          this.state.currentPage = currentPage - 1;
+        if (currentPage > 1) {
+          this.setState({ currentPage: currentPage - 1 });
         }
         break;
       case 'Next':
-        if(currentPage < pageCount ){
-          this.state.currentPage = currentPage + 1;
+        if (currentPage < pageCount) {
+          this.setState({ currentPage: currentPage + 1 });
         }
         break;
       default:
-          this.state.currentPage = selected;
-
+        var newPage = parseInt(selected);
+        this.setState({ currentPage: newPage });
 
     }
-      this.forceUpdate();
+    this.forceUpdate();
 
   }
   componentDidMount() {

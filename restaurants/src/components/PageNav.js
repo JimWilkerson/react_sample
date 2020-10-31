@@ -2,17 +2,12 @@ import React from 'react';
 
 class PageNav extends React.Component {
     render() {
-
-        debugger;
-        var itemCount = this.props.itemCount;
-        var maxItems = this.props.maxItems;
         var pageCount = this.props.pageCount;
         var listElements = [];
 
-
-        for (var lp=0; lp < pageCount; lp++){
-            listElements  = listElements.concat(
-                    <li onClick={this.props.setPage} class="page-item"><button class="page-link" href="#">{lp + 1}</button></li>
+        for (var lp = 0; lp < pageCount; lp++) {
+            listElements = listElements.concat(
+                <li onClick={this.props.setPage} class="page-item"><button class="page-link" href="#">{lp + 1}</button></li>
             );
         }
 
@@ -27,6 +22,5 @@ class PageNav extends React.Component {
     }
 
 }
-
 
 export default PageNav;
