@@ -1,1 +1,7 @@
-{}
+{
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "react-app-polyfill": "^2.0.0",
+    "react-device-detect": "^1.14.0"
+  }
+}
