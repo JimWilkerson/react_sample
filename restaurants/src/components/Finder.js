@@ -25,6 +25,11 @@ class Finder extends React.Component {
       var items =
         this.sortData(content.data).slice(pageStart, pageStart + maxItems);
 
+      var stateOptionsList =
+        this.getStates(content.data);
+
+      debugger;
+
       var itemCount = content.data.length;
       var pageCount = Math.ceil(itemCount / maxItems);
 
@@ -44,23 +49,24 @@ class Finder extends React.Component {
                     <th align="left">Name</th>
                     <th align="left">City</th>
                     <th align="left">
-                      <label for="state" style={{display:'inline'}}>State</label>
-                      <select name="state" id="stateDropdown" style={{marginLeft:'5px'}}>
-                        <option value="AZ">AZ</option>
-                        <option value="CO">CO</option>
+                      <label for="state" style={{ display: 'inline' }}>State</label>
+                      <select name="state" id="stateDropdown" style={{ marginLeft: '5px' }}>
+                        {stateOptionsList}
                       </select>
                     </th>
                     <th align="left">Phone</th>
                     <th align="left">
-                      <label for="genre" style={{display:'inline'}}>Genre</label>
-                      <select name="genre" id="genreDropdown" style={{marginLeft:'5px'}}>
+                      <label for="genre" style={{ display: 'inline' }}>Genre</label>
+                      <select name="genre" id="genreDropdown" style={{ marginLeft: '5px' }}>
                         <option value="">American,Contemporary</option>
                         <option value="">Cafe,Italian,Bistro,Contemporary,Vegetarian</option>
                       </select>
                     </th>
                   </tr>
                 </thead>
-                {items}
+                <tbody>
+                  {items}
+                </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="5">
@@ -135,18 +141,38 @@ class Finder extends React.Component {
     return items
       .sort((a, b) => a.name + a.city + a.state > b.name + b.city + b.state ? 1 : -1)
       .map((item, index) =>
-        <tbody>
-          <tr>
-            <td>{item.name}</td>
-            <td>{item.city}</td>
-            <td>{item.state}</td>
-            <td>{item.telephone}</td>
-            <td>{item.genre}</td>
-          </tr>
-        </tbody>
+        <tr>
+          <td>{item.name}</td>
+          <td>{item.city}</td>
+          <td>{item.state}</td>
+          <td>{item.telephone}</td>
+          <td>{item.genre}</td>
+        </tr>
       );
 
   }
+
+  getStates(items) {
+    var filteredStates = this.filterStates(items);
+    return filteredStates
+      .sort((a, b) => a.state > b.state ? 1 : -1)
+      .map((item, index) =>
+        <option value="">{item.state}</option>
+      );
+  }
+
+  filterStates(items) {
+    var newList = [];
+    for (var lp = 0; lp < items.length; lp++) {
+      var state = items[lp].state;
+      if (!newList.some(item => item.state == state)) {
+        newList = newList.concat(items[lp]);
+      }
+    }
+    debugger;
+    return newList;
+  }
+
 
 }
 
