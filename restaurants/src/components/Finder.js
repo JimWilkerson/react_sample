@@ -1,5 +1,6 @@
 import React from 'react';
 import PageNav from './PageNav.js';
+import SearchPanel from './SearchPanel.js';
 
 class Finder extends React.Component {
   constructor(props) {
@@ -31,27 +32,46 @@ class Finder extends React.Component {
         <div>
           <img src="Fork-Knife-icon.png" alt="" />
           <h1>Jim's Restaurant Finder</h1>
-          <div>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th align="left">Name</th>
-                  <th align="left">City</th>
-                  <th align="left">State</th>
-                  <th align="left">Phone</th>
-                  <th align="left">Genre</th>
-                </tr>
-              </thead>
-              {items}
-              <tfoot>
-                <tr>
-                  <td colspan="5">
-                    <div align="right">Page {currentPage} of {pageCount} </div>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <SearchPanel />
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th align="left">Name</th>
+                    <th align="left">City</th>
+                    <th align="left">
+                      <label for="state" style={{display:'inline'}}>State</label>
+                      <select name="state" id="stateDropdown" style={{marginLeft:'5px'}}>
+                        <option value="AZ">AZ</option>
+                        <option value="CO">CO</option>
+                      </select>
+                    </th>
+                    <th align="left">Phone</th>
+                    <th align="left">
+                      <label for="genre" style={{display:'inline'}}>Genre</label>
+                      <select name="genre" id="genreDropdown" style={{marginLeft:'5px'}}>
+                        <option value="">American,Contemporary</option>
+                        <option value="">Cafe,Italian,Bistro,Contemporary,Vegetarian</option>
+                      </select>
+                    </th>
+                  </tr>
+                </thead>
+                {items}
+                <tfoot>
+                  <tr>
+                    <td colspan="5">
+                      <div align="right">Page {currentPage} of {pageCount} </div>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
+
           <PageNav
             itemCount={content.data.length}
             currentPage={currentPage}
@@ -69,6 +89,8 @@ class Finder extends React.Component {
 
     }
   }
+
+
   setPage(event) {
 
     var selected = event.target.innerText;
@@ -78,7 +100,6 @@ class Finder extends React.Component {
     var maxItems = this.state.maxItems;
     var pageCount = Math.ceil(itemCount / maxItems);
 
-    debugger;
     switch (selected) {
       case 'Previous':
         if (currentPage > 1) {
@@ -93,11 +114,13 @@ class Finder extends React.Component {
       default:
         var newPage = parseInt(selected);
         this.setState({ currentPage: newPage });
-
     }
+
     this.forceUpdate();
 
   }
+
+
   componentDidMount() {
     fetch('/restaurantData.json')
       .then(res => res.json())
