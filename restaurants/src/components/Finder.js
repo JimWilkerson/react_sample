@@ -46,6 +46,7 @@ class Finder extends React.Component {
               <SearchPanel search={searchCallback}/>
             </div>
             <div class="panel-body">
+              <h3 class="text-danger">{itemCount <1  ? "No Results Found":""}</h3>
               <table class="table">
                 <thead>
                   <tr>
